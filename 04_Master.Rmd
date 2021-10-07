@@ -29,7 +29,7 @@ plot.NDVI(dat)
 
 Q1: This plot suggests that Fynbos greenness (NDVI) as observed from satellite saturates with time since fire. Why do you think it saturates rather than increasing linearly with time?
 
->*Answer 1:*
+> There is a maximum level of greenness/growth that the environment is able to sustain. After a fire, there is very little competition and plenty of seeds opening as many fynbos species only germinate after fire. There is plenty of new growth and the NDVI increases rapidly. But as the number and size of plants increases, the enviornment will approach carrying capacity and competition will increase, slowing growth. This is seen in the saturating NDVI.
 <br>
 
 ### 2. Fit models using Non-linear Least Squares (NLS)
@@ -88,7 +88,8 @@ Lots more parameters...
 
 Q2: How do the estimates for the common parameters compare?
 
->*Answer 2:*
+>In the simpler model, $\alpha$ is 0.25107, and in the full model, it's lower, at 0.207522. The simple model reports $\gamma$ as 0.32371 while the full model reports it as 0.364746. The simple model reports $\lambda$ as 1.17687 and the full model reports it as  0.989154.
+Both $\lambda$ values have quite high standard error values, at 0.21396 and 0.126064 respectively, Their estimates are larger by several times than the other common parameters, so larger errors are expected, but these are large errors regardless.
 <br>
 
 ### 3. Compare NLS models using ANOVA
@@ -105,10 +106,11 @@ anova(fit_negexp, fit_negexpS)
 
 Q3: Which model is better?
 
->*Answer 3:*
+>The full model is better as it has a smaller residula sum of squares, at 0.45280 where the simple model has a much larger RSS of 0.71976.
+
 Q4: How many degrees of freedom are there in this ANOVA and why (i.e. what are they)?
 
->*Answer 4:*
+>There are two degrees of freedom between these two models, because the simple model does not include $\phi$ and $A$ as parameters.
 <br>
 
 ### 4. Fit models using Maximum Likelihood Estimation (MLE)
@@ -162,7 +164,7 @@ Another way to compare models (and probably the most common) is using the Akaike
 
 The formula for the Akaike information criterion is:
 
-$AIC = 2K -2(ln(L))$
+$AIC = 2k -2(ln(L))$
 
 Where:
 
@@ -190,7 +192,7 @@ AIC_simple - AIC_full
 
 Q5: Is there a preferred model and if so, which one?
 
->*Answer 5:*
+>The full model is vastly preferred, with the difference of AIC being 266957.8. 
 <br>
 
 The nice thing about AIC is that the models you compare do not have to be nested like they do for ANOVA, as long as the data are the same. There are a few other constraints however... 
@@ -207,5 +209,5 @@ You'll notice that these are completely different to the AICs for the MLE models
 
 Q6: Why is it not okay to compare the AIC of these NLS models with the AIC of the MLE models? Hint: type `?AIC` into the R console and do some reading.
 
->*Answer 6:*
+>The NLS models are not fitted by maximum likelihood and they therefore do not meet the requirements for AIC comparison. Because log-likelihood has not been maximized, AIC would be working off two different, non-comparable things and would not give useful results.
 <br>
